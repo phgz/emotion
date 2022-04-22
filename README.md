@@ -72,25 +72,31 @@ curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3 - -
 Clone the project
 
 ```bash
-  git clone https://github.com/philipgaudreau/emotion
+git clone https://github.com/philipgaudreau/emotion
 ```
 
 Go to the project directory
 
 ```bash
-  cd emotion
+cd emotion
 ```
 
 Install dependencies (add flag `--default` if you do not want development dependencies)
 
 ```bash
-  poetry install
+poetry install
+```
+
+Activate the virtual environment
+
+```bash
+poetry shell
 ```
 
 Start using the command line interface
 
 ```bash
-  emotion --help
+emotion --help
 ```
 
 ## Running Tests
@@ -98,7 +104,7 @@ Start using the command line interface
 To run tests, run the following command (development dependencies must be installed)
 
 ```bash
-  pytest tests
+pytest tests
 ```
 
 ## Deployment
@@ -106,7 +112,7 @@ To run tests, run the following command (development dependencies must be instal
 To deploy this project run
 
 ```bash
-  [TODO]
+[TODO]
 ```
 
 ## Tech Stack
