@@ -35,8 +35,7 @@ current_metadata_file = next(
 )
 metadata_name = current_metadata_file.split("/")[-1]
 
-origin_default = next(ref for ref in repo.refs if ref.name == "origin/main")
-default_branch = origin_default.name.split("/")[-1]
+default_branch = next(ref for ref in repo.refs if ref.name == "origin/main")
 default_branch_metadata_file = default_branch.commit.tree[metadata_name]
 
 with open(current_metadata_file, "r") as f:
