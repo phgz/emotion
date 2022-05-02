@@ -15,6 +15,10 @@ jobs:
 
     - uses: actions/checkout@v3
 
+    - uses: actions/checkout@v3
+      with:
+        ref: main
+
     - name: Set up Python 3.8
       uses: actions/setup-python@v3
       with:
@@ -22,12 +26,6 @@ jobs:
 
     - name: Install Dependencies
       run: pip install toml gitpython autoflake
-
-    - name: Remote set-head Origin
-      run: |
-        ls -la
-        ls -la .git
-        ls -la .git/refs/remotes/origin
 
     - name: Run Checks
       run: python .github/workflows/checks.py
