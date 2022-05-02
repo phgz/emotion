@@ -34,14 +34,15 @@ current_metadata_file = next(
     filter(lambda p: os.path.exists(p), map(path, metadata_files))
 )
 metadata_name = current_metadata_file.split("/")[-1]
-print([ref.name for ref in repo.refs])
-default_branch = next(ref for ref in repo.refs if ref.name == "main")
+
+origin_default = next(ref for ref in repo.refs if ref.name == "origin/main")
+default_branch = origin_default.name.split("/")[-1]
 default_branch_metadata_file = default_branch.commit.tree[metadata_name]
 
 with open(current_metadata_file, "r") as f:
     current_content = f.read()
 
-main_content = repo.git.show(default_branch_metadata_file)
+default_content = repo.git.show(default_branch_metadata_file)
 
 not_staged = [item.a_path for item in repo.index.diff(None)]
 
@@ -56,7 +57,8 @@ find_version = dict(
 )
 
 versions = [
-    find_version[metadata_name](content) for content in [current_content, main_content]
+    find_version[metadata_name](content)
+    for content in [current_content, default_content]
 ]
 
 parsed_current, parsed_remote_master = [list(map(int, v.split("."))) for v in versions]
