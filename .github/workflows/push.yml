@@ -3,11 +3,9 @@
 
 name: emotion - push
 
-on:
-  push
+on: push
 
-permissions:
-  contents: read
+permissions: read-all
 
 jobs:
   PreJobs:
