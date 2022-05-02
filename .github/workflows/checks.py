@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import os
 import re
 import subprocess
@@ -29,28 +28,26 @@ for item in index:
 #                              Check for version                                #
 # ------------------------------------------------------------------------------#
 
-setup_files = ["setup.py", "pyproject.toml"]
+metadata_files = ["setup.py", "pyproject.toml"]
 path = lambda file: os.path.join(project_root, file)
-current_setup_file = next(filter(lambda p: os.path.exists(p), map(path, setup_files)))
-setup_name = current_setup_file.split("/")[-1]
+current_metadata_file = next(
+    filter(lambda p: os.path.exists(p), map(path, metadata_files))
+)
+metadata_name = current_metadata_file.split("/")[-1]
 
-HEAD = next(ref for ref in repo.remotes.origin.refs if ref.name == "origin/HEAD")
-default_branch = HEAD.ref.name.split("/")[-1]
+default_branch = next(ref for ref in repo.refs if ref.name == "main")
+default_branch_metadata_file = default_branch.commit.tree[metadata_name]
 
-remote_master_setup_file = repo.remotes.origin.fetch(default_branch)[0].commit.tree[
-    setup_name
-]
-
-with open(current_setup_file, "r") as f:
+with open(current_metadata_file, "r") as f:
     current_content = f.read()
 
-remote_master_content = repo.git.show(remote_master_setup_file)
+main_content = repo.git.show(default_branch_metadata_file)
 
 not_staged = [item.a_path for item in repo.index.diff(None)]
 
 find_version = dict(
     zip(
-        setup_files,
+        metadata_files,
         [
             lambda s: re.search(r"version\s*=\s*[\'|\"](.*)[\"|\']", s).group(1),
             lambda s: toml.loads(s)["tool"]["poetry"]["version"],
@@ -59,13 +56,12 @@ find_version = dict(
 )
 
 versions = [
-    find_version[setup_name](content)
-    for content in [current_content, remote_master_content]
+    find_version[metadata_name](content) for content in [current_content, main_content]
 ]
 
 parsed_current, parsed_remote_master = [list(map(int, v.split("."))) for v in versions]
 
-if parsed_current <= parsed_remote_master or setup_name in not_staged:
+if parsed_current <= parsed_remote_master or metadata_name in not_staged:
     print(repo.active_branch.name + "'s version is not greater than remote master's.")
     sys.exit(1)
 
