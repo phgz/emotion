@@ -69,7 +69,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        dvc pull
+        GDRIVE_CREDENTIALS_DATA=$GDRIVE_CREDENTIALS_DATA dvc pull
         pytest tests
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.DVCSTORAGE }}
