@@ -24,7 +24,10 @@ jobs:
       run: pip install toml gitpython autoflake
 
     - name: Remote set-head Origin
-      run: git remote set-head origin --auto
+      run: |
+        ls -la
+        ls -la .git
+        ls -la .git/refs/remotes/origin
 
     - name: Run Checks
       run: python .github/workflows/checks.py
