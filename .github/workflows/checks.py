@@ -34,7 +34,7 @@ current_metadata_file = next(
     filter(lambda p: os.path.exists(p), map(path, metadata_files))
 )
 metadata_name = current_metadata_file.split("/")[-1]
-
+print([ref.name for ref in repo.refs])
 default_branch = next(ref for ref in repo.refs if ref.name == "main")
 default_branch_metadata_file = default_branch.commit.tree[metadata_name]
 
