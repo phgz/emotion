@@ -2,6 +2,7 @@
 
 A model for emotion classification based on text and audio.
 
+[![emotion - push](https://github.com/philipGaudreau/emotion/actions/workflows/push.yml/badge.svg)](https://github.com/philipGaudreau/emotion/actions/workflows/push.yml)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 ## Acknowledgements

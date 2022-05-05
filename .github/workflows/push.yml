@@ -1,0 +1,75 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: emotion - push
+
+on: push
+
+permissions: read-all
+
+jobs:
+  PreJobs:
+    runs-on: ubuntu-latest
+    name: Check versions and syntax
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+
+    - name: Install Dependencies
+      run: pip install toml gitpython autoflake
+
+    - name: Run Checks
+      run: python .github/workflows/checks.py
+
+
+  buildAndTests:
+    runs-on: ubuntu-latest
+    name: Build and Tests
+    needs: PreJobs
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+
+    - name: Install Poetry
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3.8 - --yes
+
+        poetry=$HOME/.local/bin/poetry
+        
+        $poetry config virtualenvs.create false
+
+    - name: Build Project
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        poetry=$HOME/.local/bin/poetry
+
+        echo "Checking that the poetry.lock file corresponds to the current version of pyproject.toml."
+        $poetry lock --check
+
+        $poetry install --no-interaction
+
+    - name: Test with pytest
+      run: |
+        GDRIVE_CREDENTIALS_DATA=$GDRIVE_CREDENTIALS_DATA dvc pull
+        pytest tests
+      env:
+        GDRIVE_CREDENTIALS_DATA: ${{ secrets.DVCSTORAGE }}
