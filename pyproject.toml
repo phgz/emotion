@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "emotion"
-version = "0.2.0"
+version = "0.3.0"
 description = "A model for emotion classification based on text and audio."
 authors = ["Philip Gaudreau <this@philipgaudreau.email>", "Guy Raymond <guy.tard@gmail.com>", "Gabriel Trottier <gtrottier16@gmail.com>"]
 readme = "README.md"
