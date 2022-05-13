@@ -509,6 +509,20 @@ art-plugin = ["Pillow (>=8.0.1,<9.0.0)", "pylast (>=4.0.0,<5.0.0)", "requests (>
 test = ["pytest (>=6.2.1,<7.0.0)", "pytest-cov (>=2.10.1,<3.0.0)", "tox (>=3.20.1,<4.0.0)", "factory-boy (>=3.1.0,<4.0.0)", "flake8 (>=3.8.4,<4.0.0)", "check-manifest (>=0.45,<0.46)"]
 
 [[package]]
+name = "fanalysis"
+version = "0.0.1"
+description = "Python module for Factorial Analysis"
+category = "dev"
+optional = false
+python-versions = ">=3"
+
+[package.dependencies]
+matplotlib = ">=2.0.0"
+numpy = ">=1.11.0"
+pandas = ">=0.19.0"
+scikit-learn = ">=0.18.0"
+
+[[package]]
 name = "fastjsonschema"
 version = "2.15.3"
 description = "Fastest Python implementation of JSON schema"
@@ -2270,7 +2284,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "0ee2a4ee678501f4d4883a67e6a1ecdaa7d421ac348d372f54a598d1df0b2b09"
+content-hash = "752b1e10beef13d530fc6d333bccc448eaa0764697696e82f8c6f7a010f7af56"
 
 [metadata.files]
 aiohttp = [
@@ -2673,6 +2687,10 @@ executing = [
 eyed3 = [
     {file = "eyeD3-0.9.6-py3-none-any.whl", hash = "sha256:97bd529384df1c3dbdd143d86bf1705729d97d862969a214696f9e32c32b5767"},
     {file = "eyeD3-0.9.6.tar.gz", hash = "sha256:4b5064ec0fb3999294cca0020d4a27ffe4f29149e8292fdf7b2de9b9cabb7518"},
+]
+fanalysis = [
+    {file = "fanalysis-0.0.1-py3-none-any.whl", hash = "sha256:8d43ecf5b6b85869f9ffc9de9c79d7b4d64f87a3204c17687717e7c9863fef49"},
+    {file = "fanalysis-0.0.1.tar.gz", hash = "sha256:aef808f703e2041acfa97e208b8fbc14169b68ea21fb2a7bac35dcda53f19082"},
 ]
 fastjsonschema = [
     {file = "fastjsonschema-2.15.3-py3-none-any.whl", hash = "sha256:ddb0b1d8243e6e3abb822bd14e447a89f4ab7439342912d590444831fa00b6a0"},
