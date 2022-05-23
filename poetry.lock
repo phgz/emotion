@@ -319,6 +319,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "deap"
+version = "1.3.1"
+description = "Distributed Evolutionary Algorithms in Python"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
 name = "debugpy"
 version = "1.6.0"
 description = "An implementation of the Debug Adapter Protocol for Python"
@@ -2043,6 +2054,14 @@ pure-eval = "*"
 tests = ["pytest", "typeguard", "pygments", "littleutils", "cython"]
 
 [[package]]
+name = "stopit"
+version = "1.1.2"
+description = "Timeout control decorator and context managers, raise any exception in another thread"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "tabulate"
 version = "0.8.9"
 description = "Pretty-print tabular data"
@@ -2128,12 +2147,50 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "torch"
+version = "1.11.0"
+description = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+category = "dev"
+optional = false
+python-versions = ">=3.7.0"
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
 name = "tornado"
 version = "6.1"
 description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
 category = "dev"
 optional = false
 python-versions = ">= 3.5"
+
+[[package]]
+name = "tpot"
+version = "0.11.7"
+description = "Tree-based Pipeline Optimization Tool"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+deap = ">=1.2"
+joblib = ">=0.13.2"
+numpy = ">=1.16.3"
+pandas = ">=0.24.2"
+scikit-learn = ">=0.22.0"
+scipy = ">=1.3.1"
+stopit = ">=1.1.1"
+tqdm = ">=4.36.1"
+update-checker = ">=0.16"
+xgboost = ">=1.1.0"
+
+[package.extras]
+dask = ["dask (>=0.18.2)", "distributed (>=1.22.1)", "dask-ml (>=1.0.0)"]
+imblearn = ["imbalanced-learn (>=0.7.0)"]
+mdr = ["scikit-mdr (>=0.4.4)"]
+skrebate = ["skrebate (>=0.3.4)"]
+torch = ["torch (==1.3.1)"]
 
 [[package]]
 name = "tqdm"
@@ -2164,6 +2221,22 @@ description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "update-checker"
+version = "0.18.0"
+description = "A python module that will check for package updates."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = ">=2.3.0"
+
+[package.extras]
+dev = ["black", "flake8", "pytest (>=2.7.3)"]
+lint = ["black", "flake8"]
+test = ["pytest (>=2.7.3)"]
 
 [[package]]
 name = "uritemplate"
@@ -2222,6 +2295,38 @@ python-versions = "*"
 notebook = ">=4.4.1"
 
 [[package]]
+name = "wordcloud"
+version = "1.8.1"
+description = "A little word cloud generator"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+matplotlib = "*"
+numpy = ">=1.6.1"
+pillow = "*"
+
+[[package]]
+name = "xgboost"
+version = "1.6.1"
+description = "XGBoost Python Package"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = "*"
+scipy = "*"
+
+[package.extras]
+dask = ["dask", "pandas", "distributed"]
+datatable = ["datatable"]
+pandas = ["pandas"]
+plotting = ["graphviz", "matplotlib"]
+scikit-learn = ["scikit-learn"]
+
+[[package]]
 name = "xmltodict"
 version = "0.12.0"
 description = "Makes working with XML feel like you are working with JSON"
@@ -2270,7 +2375,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "0ee2a4ee678501f4d4883a67e6a1ecdaa7d421ac348d372f54a598d1df0b2b09"
+content-hash = "9e5dd461a136dbec146a26f6b1030f974396c34320b2262e527011bf8a99df84"
 
 [metadata.files]
 aiohttp = [
@@ -2586,6 +2691,49 @@ cryptography = [
 cycler = [
     {file = "cycler-0.11.0-py3-none-any.whl", hash = "sha256:3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3"},
     {file = "cycler-0.11.0.tar.gz", hash = "sha256:9c87405839a19696e837b3b818fed3f5f69f16f1eec1a1ad77e043dcea9c772f"},
+]
+deap = [
+    {file = "deap-1.3.1-cp27-cp27m-macosx_10_13_x86_64.whl", hash = "sha256:937548989075ddbc30294e0a5d96432000217c83421dad28afc8bc373723cb82"},
+    {file = "deap-1.3.1-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:8fd13bee65a91b77bbf999befdebe471c102b6b26581ea92bbd6fa4e4d55efd3"},
+    {file = "deap-1.3.1-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:86a4b98fb7b46e53125f48e8b5572b3c8021c9d31e7edc15e1b2b59c21209d03"},
+    {file = "deap-1.3.1-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:ef1e150be601a2fa94eca9a82a089036830c47c7cc0c67e92ec8ebca64c19b50"},
+    {file = "deap-1.3.1-cp27-cp27m-win_amd64.whl", hash = "sha256:b11bf90dc6ddc454f47977d4d3f2c32f48d5fb3bd200120827c4d55206b3c110"},
+    {file = "deap-1.3.1-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:49a21b4f21f5e429c3dfa2d7e448cd1a80963ca4f4b71653d1a78d4ae10c9d70"},
+    {file = "deap-1.3.1-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:50d4c817b3b17ab705a15e99a03384d588735a966ba170a1d42aa45a59288dc7"},
+    {file = "deap-1.3.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:51e10643e773b3962baf6397888d253ae1e468fae6ed30e5cf3be108e21fc017"},
+    {file = "deap-1.3.1-cp34-cp34m-manylinux1_x86_64.whl", hash = "sha256:dd9d2b5c65814930084b4c781ced6bb6906fabf708e4c94b97c5fce9432a088a"},
+    {file = "deap-1.3.1-cp34-cp34m-manylinux2010_x86_64.whl", hash = "sha256:4fcf65d04420bd8d7b2ee4f165c562db6671746c1cdf599d82ec59f71be7188e"},
+    {file = "deap-1.3.1-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:2f2f9373e23dfbd6cdda2ff0c05f2fc7f9a96d0f03d9a3814bae4790067339ed"},
+    {file = "deap-1.3.1-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:5d2d481ec28f947d9c3d838909a49c5e09bbdc8110cca366b544fb0d5afbdd95"},
+    {file = "deap-1.3.1-cp35-cp35m-win_amd64.whl", hash = "sha256:a1fb86ed6ef2ebf4e9e938b87fdcbc10cad1c147cd9ec9311957d6ec583e9d49"},
+    {file = "deap-1.3.1-cp36-cp36m-macosx_10_13_x86_64.whl", hash = "sha256:e071b3a5ffeeb760a3d7e606a81122c2f192c9ebe9317116131a9d6624bfdf49"},
+    {file = "deap-1.3.1-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:657a038e69937e292fac3daf6641243a7ebd87e8424e8bdf930e5ef74e638776"},
+    {file = "deap-1.3.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:3113e31e7f9e6e2d0d3e9d41168541ca9469b3e796c03cfb5d81bd170af096fa"},
+    {file = "deap-1.3.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:ead42f533c07e929ba02a4b3b9e04c274eb64689edd9c0fe42e4f63620b24385"},
+    {file = "deap-1.3.1-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:23083349c7eb1331eeee2fde3fd71545f3d5c8896d292f3e37a49930210f5669"},
+    {file = "deap-1.3.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:a8dee866f9a427f3284f25b7bb988dbc2f8383ad007df8b081c6784f148c754a"},
+    {file = "deap-1.3.1-cp36-cp36m-win_amd64.whl", hash = "sha256:6365452dce08f6df9daee7255671972184c5e5da11391232e874cccc36d02366"},
+    {file = "deap-1.3.1-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:354d629e0d1605c493e4eee3587a7e3503343864b9967d5b2d83c0026307346c"},
+    {file = "deap-1.3.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:809534e155c76a4f46d480f6d73dc347f2bc90324d9e3546a68bdbf33164d165"},
+    {file = "deap-1.3.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:9e330449160ebe18929e7db2595c2a6931f5132a323e4096d36ef26d0802bd14"},
+    {file = "deap-1.3.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:0283b29ab47d841cd33c19fed547d18c15b95b2876223de42799dc61c0453080"},
+    {file = "deap-1.3.1-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c68e59f669ec22533c095d9cd4ed5188eaf8ff0dd402fc1c5f4cdd180c1db3d6"},
+    {file = "deap-1.3.1-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:a9d2e8e4603ab7151a501a669545344ee1875941c2b21a7fe8df436df29f28a2"},
+    {file = "deap-1.3.1-cp37-cp37m-win_amd64.whl", hash = "sha256:faa6a761368fcaa4459d45557a803fc3dc610c2aef37a2f62dfbddcbfabd29a3"},
+    {file = "deap-1.3.1-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:827d278d77d42aa499404e02817de8a02c5303c8cb6dde51033fa2783c6a0ea5"},
+    {file = "deap-1.3.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:26a1d10fd8b5f5dc128abea43f17b626e0e2123d5de09ee26f591ab66117e751"},
+    {file = "deap-1.3.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:8d41226849f01f4bbcff8db7037d4e8063d7f3a5b5e090c0ea59e9aa8ec3fca9"},
+    {file = "deap-1.3.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:1eac7020de9d3995173bbe30ea04cdc995830a52c97c8b4dd2d01cf6a818799d"},
+    {file = "deap-1.3.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:700150c49916c8e9a9c4c3441d941d037a043b8fe27cbec0eb453d41f46cca14"},
+    {file = "deap-1.3.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3365a217e30865e69a74a06e1ea772bf109aedcc5ccf84d3076dec1bac75025e"},
+    {file = "deap-1.3.1-cp38-cp38-win_amd64.whl", hash = "sha256:794acffc3a2da2213bd184be8d6a751b0df03bdf2271bb57da7414201c4afb28"},
+    {file = "deap-1.3.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:38ef2defe7d9e32c9552173ace5e99ff2b29599877f7dc0420baa747475837df"},
+    {file = "deap-1.3.1-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:bc58673b26c8c417e3d479701eca2b9fc3bfd9f646067036a06f7bbadabf8bba"},
+    {file = "deap-1.3.1-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:53a70b3f07a06ad6693e5b7e0c4a4387147ed0113e0eeda7ac33cfc516487f89"},
+    {file = "deap-1.3.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:75d8d1fae7602662387aba859f05dc960e7d20e4ab7c2d14783080cf8fc839ca"},
+    {file = "deap-1.3.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:4e977d8246cc84283a7f7fc9dfdbb7cb9a580025bc32b89bf2e357dee92906d8"},
+    {file = "deap-1.3.1-cp39-cp39-win_amd64.whl", hash = "sha256:47ef982c4ad26a1b5f45cf8c82b262d46b90c39e9686ba3cb831f9fcdcbdc88b"},
+    {file = "deap-1.3.1.tar.gz", hash = "sha256:11f54493ceb54aae10dde676577ef59fc52d52f82729d5a12c90b0813c857a2f"},
 ]
 debugpy = [
     {file = "debugpy-1.6.0-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:eb1946efac0c0c3d411cea0b5ac772fbde744109fd9520fb0c5a51979faf05ad"},
@@ -3819,6 +3967,9 @@ stack-data = [
     {file = "stack_data-0.2.0-py3-none-any.whl", hash = "sha256:999762f9c3132308789affa03e9271bbbe947bf78311851f4d485d8402ed858e"},
     {file = "stack_data-0.2.0.tar.gz", hash = "sha256:45692d41bd633a9503a5195552df22b583caf16f0b27c4e58c98d88c8b648e12"},
 ]
+stopit = [
+    {file = "stopit-1.1.2.tar.gz", hash = "sha256:f7f39c583fd92027bd9d06127b259aee7a5b7945c1f1fa56263811e1e766996d"},
+]
 tabulate = [
     {file = "tabulate-0.8.9-py3-none-any.whl", hash = "sha256:d7c013fe7abbc5e491394e10fa845f8f32fe54f8dc60c6622c6cf482d25d47e4"},
     {file = "tabulate-0.8.9.tar.gz", hash = "sha256:eb1d13f25760052e8931f2ef80aaf6045a6cceb47514db8beab24cded16f13a7"},
@@ -3850,6 +4001,27 @@ toml = [
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
+]
+torch = [
+    {file = "torch-1.11.0-cp310-cp310-manylinux1_x86_64.whl", hash = "sha256:62052b50fffc29ca7afc0c04ef8206b6f1ca9d10629cb543077e12967e8d0398"},
+    {file = "torch-1.11.0-cp310-cp310-manylinux2014_aarch64.whl", hash = "sha256:866bfba29ac98dec35d893d8e17eaec149d0ac7a53be7baae5c98069897db667"},
+    {file = "torch-1.11.0-cp310-cp310-win_amd64.whl", hash = "sha256:951640fb8db308a59d9b510e7d1ad910aff92913323bbe4bc75435347ddd346d"},
+    {file = "torch-1.11.0-cp310-none-macosx_10_9_x86_64.whl", hash = "sha256:5d77b5ece78fdafa5c7f42995ff9474399d22571cd6b2de21a5d666306a2ff8c"},
+    {file = "torch-1.11.0-cp310-none-macosx_11_0_arm64.whl", hash = "sha256:b5a38682769b544c875ecc34bcb81fbad5c922139b61319aacffcfd8a32f528c"},
+    {file = "torch-1.11.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:f82d77695a60626f2b7382d85bc566de8a6b3e50d32080755abc040db802e419"},
+    {file = "torch-1.11.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:b96654d42566080a134e784705f33f8536b3b95b5dcde357ed7879b1692a5f78"},
+    {file = "torch-1.11.0-cp37-cp37m-win_amd64.whl", hash = "sha256:8ee7c2e8d7f7020d5bfbc1bb91b9591044c26bbd0cee5e4f694cfd7ed8649260"},
+    {file = "torch-1.11.0-cp37-none-macosx_10_9_x86_64.whl", hash = "sha256:6860b1d1bf0bb0b67a6bd47f85a0e4c825b518eea13b5d6101999dbbcbd5bc0c"},
+    {file = "torch-1.11.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:4322aa29f50da7f404db06cdf30896ea67b09f673af4a985afc7162bc897864d"},
+    {file = "torch-1.11.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:e4d2e0ddd652f30e94cff750220324ec45705d4ecc69658f773b3cb1c7a28dd0"},
+    {file = "torch-1.11.0-cp38-cp38-win_amd64.whl", hash = "sha256:34ce5ea4d8d85da32cdbadb50d4585106901e9f8a3527991daa70c13a09de1f7"},
+    {file = "torch-1.11.0-cp38-none-macosx_10_9_x86_64.whl", hash = "sha256:0ccc85cd06227a3edf809e2c795fd5762c3d4e8a38b5c9f744c6e7cf841361bb"},
+    {file = "torch-1.11.0-cp38-none-macosx_11_0_arm64.whl", hash = "sha256:c1554e49d74f1b2c3e7202d77056ba2dd7465437585bac64062b580f714a44e9"},
+    {file = "torch-1.11.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:58c7814502b1c129a650d7092033bbb0bbd64faf1a7941631aaa1aeaddc37570"},
+    {file = "torch-1.11.0-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:831cf588f01dda9409e75576741d2823453990dee2983d670f2584b37a01adf7"},
+    {file = "torch-1.11.0-cp39-cp39-win_amd64.whl", hash = "sha256:44a1d02fd20f827f0f36dc26fdcfc45e793806a6ad52769a22260655a77a4369"},
+    {file = "torch-1.11.0-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:50fd9bf85c578c871c28f1cb0ace9dfc6024401c7f399b174fb0f370899f4454"},
+    {file = "torch-1.11.0-cp39-none-macosx_11_0_arm64.whl", hash = "sha256:0e48af66ad755f0f9c5f2664028a414f57c49d6adc37e77e06fe0004da4edb61"},
 ]
 tornado = [
     {file = "tornado-6.1-cp35-cp35m-macosx_10_9_x86_64.whl", hash = "sha256:d371e811d6b156d82aa5f9a4e08b58debf97c302a35714f6f45e35139c332e32"},
@@ -3894,6 +4066,10 @@ tornado = [
     {file = "tornado-6.1-cp39-cp39-win_amd64.whl", hash = "sha256:548430be2740e327b3fe0201abe471f314741efcb0067ec4f2d7dcfb4825f3e4"},
     {file = "tornado-6.1.tar.gz", hash = "sha256:33c6e81d7bd55b468d2e793517c909b139960b6c790a60b7991b9b6b76fb9791"},
 ]
+tpot = [
+    {file = "TPOT-0.11.7-py3-none-any.whl", hash = "sha256:6f323bf60bb0bd48992118e1ee5268aa71924a6c4339252494902dac95b64cae"},
+    {file = "TPOT-0.11.7.tar.gz", hash = "sha256:64ff1845efdec3d9c70b35587f719cc0821722f27d16f542f83bf81f448e3ff1"},
+]
 tqdm = [
     {file = "tqdm-4.52.0-py2.py3-none-any.whl", hash = "sha256:80d9d5165d678dbd027dd102dfb99f71bf05f333b61fb761dbba13b4ab719ead"},
     {file = "tqdm-4.52.0.tar.gz", hash = "sha256:18d6a615aedd09ec8456d9524489dab330af4bd5c2a14a76eb3f9a0e14471afe"},
@@ -3905,6 +4081,10 @@ traitlets = [
 typing-extensions = [
     {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
     {file = "typing_extensions-4.2.0.tar.gz", hash = "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"},
+]
+update-checker = [
+    {file = "update_checker-0.18.0-py3-none-any.whl", hash = "sha256:cbba64760a36fe2640d80d85306e8fe82b6816659190993b7bdabadee4d4bbfd"},
+    {file = "update_checker-0.18.0.tar.gz", hash = "sha256:6a2d45bb4ac585884a6b03f9eade9161cedd9e8111545141e9aa9058932acb13"},
 ]
 uritemplate = [
     {file = "uritemplate-4.1.1-py2.py3-none-any.whl", hash = "sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e"},
@@ -3929,6 +4109,32 @@ webencodings = [
 widgetsnbextension = [
     {file = "widgetsnbextension-3.6.0-py2.py3-none-any.whl", hash = "sha256:4fd321cad39fdcf8a8e248a657202d42917ada8e8ed5dd3f60f073e0d54ceabd"},
     {file = "widgetsnbextension-3.6.0.tar.gz", hash = "sha256:e84a7a9fcb9baf3d57106e184a7389a8f8eb935bf741a5eb9d60aa18cc029a80"},
+]
+wordcloud = [
+    {file = "wordcloud-1.8.1-cp27-cp27m-macosx_10_6_x86_64.whl", hash = "sha256:2e85b1a6b8211436d47f902837c866c682c5d00046706f1d8e72cc0cd9210d64"},
+    {file = "wordcloud-1.8.1-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:e0d3f03e4f27faf543859b4bcd229d320361d065cf4786f149081adea4ee68e8"},
+    {file = "wordcloud-1.8.1-cp27-cp27m-win32.whl", hash = "sha256:a02b27400bc4b2e4efdd8377e8cd138496b6b6e15a082d9c7b7c7b74a9ee8a55"},
+    {file = "wordcloud-1.8.1-cp27-cp27m-win_amd64.whl", hash = "sha256:6450f67c207f2ab4513c4aac803226427b39f7fc8d3498c0b41a03834b2fc426"},
+    {file = "wordcloud-1.8.1-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:f49f5213e978fb5d8ff8f6e6067de657e81ca863cab549b198579f58e1430e7c"},
+    {file = "wordcloud-1.8.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:41dafafe3768675ba8285d21ac68bd53191b50da85aba2a7fb35964d1649156f"},
+    {file = "wordcloud-1.8.1-cp36-cp36m-win32.whl", hash = "sha256:cd8c44a21a3207da813c7b7e486ed41fe517eb7b8535deef945437f4cea2b245"},
+    {file = "wordcloud-1.8.1-cp36-cp36m-win_amd64.whl", hash = "sha256:2d5f63cf1f65126d6d1b8d55acae15961c5bd55e6ef8978bf269831dafcd1408"},
+    {file = "wordcloud-1.8.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:6ff0ca777c801cd2a38deef30019f02fe35df1be9c31f6c301a34bd45006e26b"},
+    {file = "wordcloud-1.8.1-cp37-cp37m-win32.whl", hash = "sha256:9ed09d2d2916514845e42b0cc5dd86f65d4f0f89ab4bf164cc9a628d9db5a76b"},
+    {file = "wordcloud-1.8.1-cp37-cp37m-win_amd64.whl", hash = "sha256:2e1fc5991f52a0e191873025f5d8cf852eb1c39f2579d43e6d2589dc04d620d9"},
+    {file = "wordcloud-1.8.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:daa7d72f0004fcfea5f649f1683dbe47c4a9c5f721aabeb41278a4ee33f21424"},
+    {file = "wordcloud-1.8.1-cp38-cp38-win32.whl", hash = "sha256:a4a626df47eacec207988e1ffdb5bd16b2b62ac83ea2442a0043080c0c5103ac"},
+    {file = "wordcloud-1.8.1-cp38-cp38-win_amd64.whl", hash = "sha256:f190eb3efcc17765a4ed9d78001fdb713988886b93e54b2758fcf4f6c519ad51"},
+    {file = "wordcloud-1.8.1-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:90e9cff2c6939b5e1fa87d2a2c5d79c8ac2eafc4c9b9bc1bcb865ca5fde7e758"},
+    {file = "wordcloud-1.8.1.tar.gz", hash = "sha256:e6ef771aac17c1cf8558c8d5ef025796184066d7b78f8118aefe011fb0d22952"},
+]
+xgboost = [
+    {file = "xgboost-1.6.1-py3-none-macosx_10_15_x86_64.macosx_11_0_x86_64.macosx_12_0_x86_64.whl", hash = "sha256:2b3d4ee105f8434873b40edc511330b8276bf3a8d9d42fb0319973079df30b07"},
+    {file = "xgboost-1.6.1-py3-none-macosx_12_0_arm64.whl", hash = "sha256:bd3e59a5490e010004106d8ea1d07aa8e048be51a0974fca6b4f00988f087ab8"},
+    {file = "xgboost-1.6.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:bbf16af8bf72e8761fcf69fdb5798bd5add6ecb48049198551b13c1d7abeabb5"},
+    {file = "xgboost-1.6.1-py3-none-manylinux2014_x86_64.whl", hash = "sha256:6207c77f611b54d9f056edede819ead03f0235615675f88030ff9fe10d359551"},
+    {file = "xgboost-1.6.1-py3-none-win_amd64.whl", hash = "sha256:3adcb7e4ccf774d5e0128c01e5c381303c3799910ab0f2e996160fe3cd23b7fc"},
+    {file = "xgboost-1.6.1.tar.gz", hash = "sha256:24072028656f3428e7b8aabf77340ece057f273e41f7f85d67ccaefb7454bb18"},
 ]
 xmltodict = [
     {file = "xmltodict-0.12.0-py2.py3-none-any.whl", hash = "sha256:8bbcb45cc982f48b2ca8fe7e7827c5d792f217ecf1792626f808bf41c3b86051"},
