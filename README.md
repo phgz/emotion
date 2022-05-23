@@ -54,7 +54,7 @@ Install emotion with pip
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`API_KEY`
+`GDRIVE_CREDENTIALS_DATA`
 
 `SECRET_KEY`
 

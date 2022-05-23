@@ -1,4 +1,6 @@
+/.env
 /artifacts
-__pycache__
+/notebooks/.ipynb_checkpoints/
 /data/raw
-.env
+/data/raw_sample
+__pycache__

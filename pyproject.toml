@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "emotion"
-version = "0.6.0"
+version = "0.7.0"
 description = "A model for emotion classification based on text and audio."
 authors = ["Philip Gaudreau <this@philipgaudreau.email>", "Guy Raymond <guy.tard@gmail.com>", "Gabriel Trottier <gtrottier16@gmail.com>"]
 readme = "README.md"
@@ -22,6 +22,7 @@ jupyter = "^1.0.0"
 pyAudioAnalysis = "^0.3.14"
 ffmpy = "^0.3.0"
 matplotlib = "3.4.2"
+fanalysis = "^0.0.1"
 TPOT = "^0.11.7"
 torch = "^1.11.0"
 wordcloud = "^1.8.1"
