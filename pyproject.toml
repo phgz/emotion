@@ -22,6 +22,9 @@ jupyter = "^1.0.0"
 pyAudioAnalysis = "^0.3.14"
 ffmpy = "^0.3.0"
 matplotlib = "3.4.2"
+TPOT = "^0.11.7"
+torch = "^1.11.0"
+wordcloud = "^1.8.1"
 
 [tool.poetry.plugins."console_scripts"]
 "emotion" = "emotion.cli:cli"
