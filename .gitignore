@@ -2,4 +2,5 @@
 /artifacts
 /notebooks/.ipynb_checkpoints/
 /data/raw
+/data/raw_sample
 __pycache__

@@ -1,0 +1,5 @@
+outs:
+- md5: 817d57319c936e75f2b999c34bd16221.dir
+  size: 1524788584
+  nfiles: 772
+  path: raw_sample
