@@ -1,3 +1,5 @@
+/.env
 /artifacts
+/notebooks/.ipynb_checkpoints/
 /data/raw
-.env
+__pycache__
