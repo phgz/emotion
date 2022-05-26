@@ -9,6 +9,7 @@ CSV_FILES = LABELS_DIR.iterdir()
 EMOTIONS = ["anger", "disgust", "fear", "happiness", "sadness", "surprise"]
 EMOTIONS_COLS = [f"Answer.{emotion}" for emotion in EMOTIONS]
 SENTIMENT_COL = "Answer.sentiment"
+SENTIMENT = "sentiment"
 
 
 def merge_intensity(df: pd.DataFrame) -> pd.DataFrame:
@@ -27,31 +28,32 @@ def merge_intensity(df: pd.DataFrame) -> pd.DataFrame:
     """
     return pd.concat(
         [
-            df["HITId"],
-            df[EMOTIONS_COLS].applymap(lambda v: v > 0 and 1 or 0),
-            df[SENTIMENT_COL].map(lambda v: v < 0 and -1 or v > 0 and 1 or v),
+            df[EMOTIONS].applymap(lambda v: v > 0 and 1 or 0),
+            df[SENTIMENT].map(lambda v: v < 0 and -1 or v > 0 and 1 or 0),
         ],
         axis=1,
     )
 
 
-def merge_agreement(df: pd.DataFrame) -> pd.DataFrame:
+def merge_agreement(by: str, df: pd.DataFrame) -> pd.DataFrame:
     """
     Select only segments from which there is at most a disagreeement of 1 ordinality
     and take the median/mode as the 'winning' modality.
 
     Parameters
     ----------
+    by: str
+        column to group by.
     df : pd.DataFrame
-
+        DataFrame to process.
 
     Returns
     -------
     pd.DataFrame
         The transformed DataFrame.
     """
-    groupped = df.groupby(by="HITId")
-    all_modalities = groupped[EMOTIONS_COLS + [SENTIMENT_COL]]
+    groupped = df.groupby(by=by)
+    all_modalities = groupped[EMOTIONS + [SENTIMENT]]
 
     return all_modalities.median()[(all_modalities.std(0) < 0.48).all(axis=1)]
 
@@ -63,13 +65,20 @@ def main():
     df_init = pd.concat(dfs.values())
 
     # Relevant columns
-    df = df_init[["HITId"] + EMOTIONS_COLS + [SENTIMENT_COL]]
+    ids = (
+        df_init["Input.VIDEO_ID"].astype(str) + "_" + df_init["Input.CLIP"].astype(str)
+    )
+    ids.rename("id", inplace=True)
+    df = pd.concat([ids, df_init[EMOTIONS_COLS + [SENTIMENT_COL]]], axis=1)
+    df = df.rename(
+        columns=dict(zip(EMOTIONS_COLS, EMOTIONS), **{SENTIMENT_COL: "sentiment"})
+    )
 
     # Drop missing values
     df = df.dropna()
 
-    df_merged_intensity = merge_intensity(df)
-    df_merged_agreement = merge_agreement(df_merged_intensity)
+    df_merged_intensity = pd.concat([df["id"], merge_intensity(df)], axis=1)
+    df_merged_agreement = merge_agreement("id", df_merged_intensity).astype(int)
 
     create_csv(root_dir / "data/interim/labels" / "interim.csv", df_merged_agreement)
 
