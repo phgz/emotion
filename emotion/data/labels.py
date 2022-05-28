@@ -61,6 +61,11 @@ def merge_agreement(by: str, df: pd.DataFrame) -> pd.DataFrame:
 def main():
     dfs = {csv_file.stem: pd.read_csv(csv_file) for csv_file in CSV_FILES}
 
+    # Standardize 'Input.VIDEO_ID' for `pom_extra_sqa_mono_results` dataset
+    dfs["pom_extra_sqa_mono_results"]["Input.VIDEO_ID"] = dfs[
+        "pom_extra_sqa_mono_results"
+    ]["Input.VIDEO_ID"].map(lambda x: x.split("/")[1])
+
     # Merge all dataframes
     df_init = pd.concat(dfs.values())
 
@@ -73,14 +78,16 @@ def main():
     df = df.rename(
         columns=dict(zip(EMOTIONS_COLS, EMOTIONS), **{SENTIMENT_COL: "sentiment"})
     )
+    df = df.set_index("id")
 
     # Drop missing values
-    df = df.dropna()
+    missing = df[df.isnull().any(axis=1)]
+    df = df.drop(index=missing.index)
 
-    df_merged_intensity = pd.concat([df["id"], merge_intensity(df)], axis=1)
+    df_merged_intensity = merge_intensity(df)
     df_merged_agreement = merge_agreement("id", df_merged_intensity).astype(int)
 
-    create_csv(root_dir / "data/interim/labels" / "interim.csv", df_merged_agreement)
+    create_csv(root_dir / "data/interim/labels" / "labels.csv", df_merged_agreement)
 
     return df_merged_agreement
 
