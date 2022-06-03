@@ -1,0 +1,74 @@
+# This workflow will publish package on pypi and update git tag
+
+name: emotion - merge
+
+on:
+  push:
+    branches:    
+      - 'main'
+
+permissions: read-all
+
+jobs:
+  UpdateGitTag:
+    runs-on: ubuntu-latest
+    name: Update Git Tag
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Install Poetry
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3.8 - --yes
+
+    - name: Tag commit to project's version
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        git config --global user.email "actions@github.com"
+        git config --global user.name "Github Bot"
+
+        tag=$($HOME/.local/bin/poetry version --short)
+        echo "Adding tag ${tag} to main"
+
+        git tag ${tag}
+        git push origin ${tag}
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  PublishPackage:
+    runs-on: ubuntu-latest
+    name: Publish package to PyPI
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+
+    - name: Install Poetry
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3.8 - --yes
+
+    - name: Publish Package
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        poetry=$HOME/.local/bin/poetry
+        $poetry publish --build
+

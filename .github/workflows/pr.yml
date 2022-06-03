@@ -1,18 +1,37 @@
-# This workflow will validate metadata + syntax, install Python dependencies and run tests with Python 3.8
+# This workflow will install Python dependencies and run tests with Python 3.8
 
-name: emotion - push
+name: emotion - pr
 
-on:
-  push:
-    branches-ignore:
-      - "main"
+on: pull_request
 
 permissions: read-all
 
 jobs:
+  PreJobs:
+    runs-on: ubuntu-latest
+    name: Check versions and syntax
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+
+    - name: Install Dependencies
+      run: pip install toml gitpython autoflake
+
+    - name: Run Checks
+      run: python .github/workflows/checks.py
+
+
   buildAndTests:
     runs-on: ubuntu-latest
     name: Build and Tests
+    needs: PreJobs
     steps:
 
     - uses: actions/checkout@v3
