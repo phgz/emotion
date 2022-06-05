@@ -13,6 +13,8 @@ jobs:
   UpdateGitTag:
     runs-on: ubuntu-latest
     name: Update Git Tag
+    permissions: write-all
+
     steps:
 
     - uses: actions/checkout@v3
@@ -70,5 +72,8 @@ jobs:
         set -o nounset
 
         poetry=$HOME/.local/bin/poetry
-        $poetry publish --build
+        $poetry publish --build --username "__token__" --password ${PYPI_TOKEN}
+
+      env:
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
