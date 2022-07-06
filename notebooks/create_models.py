@@ -2,9 +2,6 @@ import tensorflow as tf
 import numpy as np
 from transformers import BertTokenizerFast, TFBertModel
 
-#pos_neg_frame = pd.read_csv('../data/processed/pos_neg.csv')
-tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
-
 
 #Création du feature selon emotion positive ou négative (non-positive)
 def pos_or_neg(row):
@@ -13,7 +10,7 @@ def pos_or_neg(row):
     else :
         return 0
 
-def tokenize(data,max_len=100) :
+def tokenize(data, tokenizer,max_len=100) :
     input_ids = []
     attention_masks = []
     for i in range(len(data)):
