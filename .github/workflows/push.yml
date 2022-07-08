@@ -1,38 +1,18 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# This workflow will validate metadata + syntax, install Python dependencies and run tests with Python 3.8
 
 name: emotion - push
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - "main"
 
 permissions: read-all
 
 jobs:
-  PreJobs:
-    runs-on: ubuntu-latest
-    name: Check versions and syntax
-    steps:
-
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.8"
-
-    - name: Install Dependencies
-      run: pip install toml gitpython autoflake
-
-    - name: Run Checks
-      run: python .github/workflows/checks.py
-
-
   buildAndTests:
     runs-on: ubuntu-latest
     name: Build and Tests
-    needs: PreJobs
     steps:
 
     - uses: actions/checkout@v3
@@ -52,7 +32,16 @@ jobs:
 
         poetry=$HOME/.local/bin/poetry
         
-        $poetry config virtualenvs.create false
+        $poetry config virtualenvs.in-project true
+
+    - name: Cache project's modules
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-project-modules
+      with:
+        # Cache files that are stored in `~/.venv`
+        path: ./.venv
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('poetry.lock') }}
 
     - name: Build Project
       run: |
@@ -69,7 +58,8 @@ jobs:
 
     - name: Test with pytest
       run: |
-        GDRIVE_CREDENTIALS_DATA=$GDRIVE_CREDENTIALS_DATA dvc pull data/raw_sample
+        export PATH="$(pwd)/.venv/bin:$PATH"
+        dvc pull data/raw_sample
         pytest tests
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.DVCSTORAGE }}
