@@ -1,27 +1,12 @@
 # tools to split audio data
 
 import glob
-# import os
-# import subprocess
-# import sys
 from datetime import timedelta
-# from pathlib import Path
 from time import time
 
 import numpy as np
 import pandas as pd
 
-# from emotion import root_dir
-
-# data_dir = "../../../data"
-# labels_dir = data_dir + "/raw/labels"
-# text_dir = data_dir + "/raw/text"
-# raw_audio_dir = data_dir + "/raw/audio"
-
-# DATA_DIR = Path(root_dir / "data")
-# LABELS_DIR = Path(root_dir / "data/raw/labels")
-# TEXT_DIR = Path(root_dir / "data/raw/text")
-# RAW_AUDIO_DIR = Path(root_dir / "data/raw/audio")
 
 def load_all_ratings(labels_dir, split_id_clip = False):
     '''
@@ -226,12 +211,9 @@ def get_labeled_clips_info(labels_dir, text_dir,
         if show_progress:
             files_processed += 1
             if files_processed % 10 == 0:
-                # print(f"{files_processed}")
                 print('.', end = '')
-                # sys.stdout.write('.')
                 if files_processed % 500 == 0:
                     print(f" {files_processed} de {num_files} fichiers")
-            # files_processed += 1 
     print("\nTemps d'exécution: ",
             f"{timedelta(seconds = round(time() - stime))} (h:mm:ss)")
     clips_not_in_text = pd.DataFrame(clips_not_in_text)

@@ -77,9 +77,7 @@ def load_all_ratings(labels_dir, split_id_clip = False):
                       'fear', 'happiness',
                       'sadness', 'surprise',
                       'sentiment']
-    # df_labels = \
-        # df_labels.
-    
+ 
     # remove '/' from id's
     df_labels['id'] = df_labels['id'].map(lambda x : str(x).split("/")[-1])
     if not split_id_clip:

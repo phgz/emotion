@@ -14,12 +14,8 @@ import pandas as pd
 from emotion import root_dir
 
 # audio directories
-# audio_dir = "../../../data/raw/audio"
 AUDIO_DIR = Path(root_dir / "data/raw/audio")
-# audio_clips_dir = "../../../data/interim/audio"
 AUDIO_CLIPS_DIR = Path(root_dir / "data/interim/audio")
-# audio_features_dir = "../../../data/processed/audio"
-# AUDIO_FEATURES_DIR = Path(root_dir / "data/processed/audio")
 AUDIO_FEATURES_DIR = Path(root_dir / "data/processed/audio")
 
 # feature extraction parameters
@@ -46,7 +42,6 @@ def extract_features_mean(audio_file, len_secs=3,
     if len_secs != 'full':
         num_samples = srate * len_secs
         if num_samples > len(samples):
-            # samples = samples[:num_samples]
             samples = samples[-num_samples:]
     
     audio_features = None
@@ -96,7 +91,6 @@ def extract_features_median(audio_file, len_secs=3,
     if len_secs != 'full':
         num_samples = srate * len_secs
         if num_samples > len(samples):
-            # samples = samples[:num_samples]
             samples = samples[-num_samples:]
     
     audio_features = None
@@ -150,11 +144,8 @@ def extract_features_from_dir(audio_dir, file_names=None,
     stime = time.time()
     if file_names is None:
         file_names = glob.glob(f"{audio_dir}/*.wav")
-        # print(len(file_names))
     else:
         file_names = [f"{audio_dir}/{f}.wav" for f in file_names]
-        # file_names = [Path(audio_dir / f"{f}.wav") for f in file_names]
-        # file_names = [audio_dir + '/' + f + '.wav' for f in file_names]
     num_files = len(file_names)
     for i, f in enumerate(file_names):
         if agg == 'median':
@@ -192,7 +183,6 @@ def main():
             extract_features_from_dir(AUDIO_CLIPS_DIR, file_names=None,
                     agg=AGG, len_secs=LEN_SECS, n_mfccs=N_MFCCS
             )
-        # features.to_csv("./mfcc40_3sec_mean_features.csv",
         features.to_csv(feature_file,
                 header=True, index=True)
         print(f"features exported to {feature_file}")

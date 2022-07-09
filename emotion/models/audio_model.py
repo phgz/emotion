@@ -3,16 +3,11 @@
 import pickle
 from pathlib import Path
 
-from emotion import module_dir, root_dir
+from emotion import module_dir
 from emotion.features.audio.extract_features import extract_features_from_dir
 
-# from features.audio.extract_features import extract_features_mean
-
-ARTEFACTS_DIR = Path(root_dir / "artifacts")
-MODEL = f"{ARTEFACTS_DIR}/audio_model.pkl"
-SCALER = f"{ARTEFACTS_DIR}/audio_scaler.pkl"
-# MODEL = Path(ARTEFACTS_DIR / "audio_model.pkl")
-# SCALER = Path(ARTEFACTS_DIR / "audio_scaler.pkl")
+ARTIFACTS_DIR = Path(module_dir / "artifacts")
+MODEL = f"{ARTIFACTS_DIR}/audio_model.pkl"
 
 class AudioModel():
     def __init__(self):

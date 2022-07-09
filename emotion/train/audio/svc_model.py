@@ -1,6 +1,6 @@
 # generate and train SVC model for audio sentiment detection
 
-# import numpy as np
+
 import pickle
 from pathlib import Path
 
@@ -11,12 +11,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
-from emotion import root_dir
+from emotion import module_dir, root_dir
 
 DATA_DIR = Path(root_dir / "data/processed/audio")
 FEATURES = Path(DATA_DIR / "mfcc40_3sec_mean_features.csv")
 LABELS = Path(DATA_DIR / "sentiment_labels.csv")
-ARTIFACTS_DIR = Path(root_dir / "artifacts")
+ARTIFACTS_DIR = Path(module_dir / "artifacts")
 
 def create_datasets(in_features, in_labels, test_size=0.2):
     labels = in_labels.copy()
@@ -99,7 +99,6 @@ def predict_show_metrics(model, X, y, show_confu=False, data_name='data'):
 def train_svc(X_train, y_train, C=5):
     print("\nTraining svc audio model ...")
     gamma='auto'
-    # C=18 good,
     svc = SVC(C=C, kernel='rbf', gamma=gamma, random_state=101)
     svc.fit(X_train, y_train.values.argmax(axis=1))
     return svc
@@ -120,8 +119,7 @@ def main():
 
         predict_show_metrics(audio_model, X_test, y_test,
                 data_name = "Test")
-        # with open(f"{ARTIFACTS_DIR}/audio_scaler.pkl", "wb") as f:
-        #    pickle.dump(scaler, f)
+ 
         with open(f"{ARTIFACTS_DIR}/audio_model.pkl", "wb") as f:
             pickle.dump(audio_model, f)
     else:
