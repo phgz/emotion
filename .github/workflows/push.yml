@@ -57,6 +57,7 @@ jobs:
         $poetry lock --check
 
         $poetry install --no-interaction --without dev
+        ./.venv/bin/pip install pytest
 
     - name: Test with pytest
       run: |
