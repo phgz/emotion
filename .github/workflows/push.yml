@@ -49,17 +49,20 @@ jobs:
         set -o pipefail
         set -o nounset
 
+        sudo apt-get install libsndfile1
+
         poetry=$HOME/.local/bin/poetry
 
         echo "Checking that the poetry.lock file corresponds to the current version of pyproject.toml."
         $poetry lock --check
 
-        $poetry install --no-interaction
+        $poetry install --no-interaction --without dev
 
     - name: Test with pytest
       run: |
         export PATH="$(pwd)/.venv/bin:$PATH"
         dvc pull data/raw_sample
+        dvc pull emotion/artifacts.dvc
         pytest tests
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.DVCSTORAGE }}
