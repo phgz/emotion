@@ -17,10 +17,17 @@ FFMPEG = "/usr/bin/ffmpeg"
 LABELS_DIR = Path(root_dir / "data/raw/labels")
 TEXT_DIR = Path(root_dir / "data/raw/text")
 AUDIO_RAW_DIR = Path(root_dir / "data/raw/audio")
-# AUDIO_CLIPS_DIR = Path(root_dir / "data/interim/audio")
-AUDIO_CLIPS_DIR = Path(root_dir / "data/interim/audio_test")
+AUDIO_CLIPS_DIR = Path(root_dir / "data/interim/audio")
 
 def split_audio_clip(clip_info, audio_raw_dir, audio_out_dir):
+    '''
+        get part of audio file (.wav) from start_time to end_time
+        clip_info    : pd.Series containing id, clip, start_time, end_time
+                        (info on wav file section to get)
+        audio_raw_dir : directory containing full wav files (to be splited)
+        audio_out_dir : directory where split clips will be saved
+    '''
+
     if subprocess.run([FFMPEG, "-i",
                        Path(audio_raw_dir / f"{clip_info['id']}.wav"),
                        "-ss", str(clip_info['start_time']),
@@ -38,23 +45,26 @@ def split_audio_clip(clip_info, audio_raw_dir, audio_out_dir):
 def split_audio_clips(audio_raw_dir, audio_out_dir, clips_info=None):
     '''
         split full audio files to clips corresponding to text comments
-
+        audio_raw_dir : directory containing full wav files (to be splited)
+        audio_out_dir : directory where split clips will be saved
+        clips_info    : pd.DataFrame containing id, clip, start_time, end_time
+                        (info to split wav files)
+        returns       : list containing files where errors occcured
     '''
+
     out_path = pathlib.Path(audio_out_dir)
     out_path.mkdir(parents=True, exist_ok =True)
-    # if len(os.listdir(out_path)) > 0:
+
     if len(glob(f"{out_path}/*.wav")) > 0:
         print(f"\naudio_out_dir: ({audio_out_dir})",
                 "not empty, exiting")
         return
     else:
         print("No wavs in directory, ok")
-    # cnt = 0
+
     if clips_info is None:
         clips_info, _  = \
                 get_labeled_clips_info(LABELS_DIR, TEXT_DIR, get_text = False)
-        print("")
-        print(clips_info[clips_info.columns[:]].head())
     elif isinstance(clips_info, pd.DataFrame):
         info_columns = clips_info.columns.tolist()
         for c  in ['id', 'clip', 'start_time', 'end_time']:
@@ -85,14 +95,8 @@ def split_audio_clips(audio_raw_dir, audio_out_dir, clips_info=None):
     return split_errors
 
 def main():
-    # out_dir = data_dir + "/interim/audio/tclip"
     clips_info, _ = get_labeled_clips_info(LABELS_DIR, TEXT_DIR,
                             get_text = False)
-    # clips_info_samp.to_csv("./audio_clips_info.csv", header=True)
-    # clips_info = pd.read_csv("./audio_clips_info.csv") #,
-    #                    index_col=None, header=0)
-    print("")
-    print(clips_info[clips_info.columns[:]].head())
         
     split_errors = \
             split_audio_clips(AUDIO_RAW_DIR, AUDIO_CLIPS_DIR, clips_info)

@@ -10,13 +10,12 @@ ARTIFACTS_DIR = Path(module_dir / "artifacts")
 MODEL = f"{ARTIFACTS_DIR}/audio_model.pkl"
 
 class AudioModel():
+    '''
+        SVM audio sentiment classifier
+    '''
     def __init__(self):
-        # print(MODEL)
-        # print(SCALER)
         with open(MODEL, "rb") as f:
             self._model = pickle.load(f)
-        # with open(SCALER, "rb") as f:
-        #     self._scaler = pickle.load(f)
         self.class_names = self._model.class_names
 
     def preprocess(self, audio_dir, file_names):
