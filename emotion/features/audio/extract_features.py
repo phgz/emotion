@@ -10,7 +10,6 @@ from pathlib import Path
 import librosa
 import numpy as np
 import pandas as pd
-
 from emotion import root_dir
 
 # audio directories
@@ -121,6 +120,46 @@ def extract_features_median(audio_file, len_secs=3,
         audio_features = mfccs
     return audio_features, feature_names
 
+
+def extract_features_from_files(files, agg='mean', len_secs=3, n_mfccs=40, rms=False, zrc=False, show_progress=True):
+    '''
+        extract audio features from files
+        files  : directory containing wav files 16000 sampling rate, mono
+        file_names : list of file names to extract features from
+        agg        : type of aggregation to perform on features
+                     'median' or 'mean'
+        len_secs   : length of audio clip on which to extract features
+        n_mfccs    : number of mel frequency ceptral coefficients
+        rms        : extract rms (energy)
+        zrc        : extract zero crossing rate
+        returns    : audio_features: pd.Series containing median audio features
+    '''
+    audio_features = {}
+    stime = time.time()
+    num_files = len(files)
+    for i, f in enumerate(files):
+        if agg == 'median':
+            clip_features, fnames = \
+                extract_features_median(f, len_secs, n_mfccs, rms, zrc)
+        else:
+            clip_features, fnames = \
+                extract_features_mean(f, len_secs, n_mfccs, rms, zrc)
+        audio_features[str(i)] = clip_features
+
+        if show_progress:
+            if i % 10 == 0 and i != 0:
+                print('.', end = '')
+                if i % 500 == 0:
+                    print(f" {i} de {num_files} fichiers")
+
+    audio_features = pd.DataFrame(audio_features).T
+    audio_features.columns = fnames
+    etime = time.time()
+    proc_time = timedelta(seconds = round(etime - stime))
+    if show_progress:
+        print("\n{audio_features.shape[0]}",
+            f"fichiers extraits: {proc_time} (h:mm:ss)")
+    return audio_features
 
 def extract_features_from_dir(audio_dir, file_names=None,
                                     agg='mean', len_secs=3,
