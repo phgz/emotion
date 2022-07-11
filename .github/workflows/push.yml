@@ -28,7 +28,7 @@ jobs:
         set -o pipefail
         set -o nounset
 
-        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3.8 - --yes
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.14 python3.8 - --yes
 
         poetry=$HOME/.local/bin/poetry
         
