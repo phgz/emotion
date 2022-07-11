@@ -1,5 +1,6 @@
 import os
 
+print(os.getenv("LD_LIBRARY_PATH"))
 import dvc.api
 from emotion.models.audio_model import AudioModel
 from flask import Flask
