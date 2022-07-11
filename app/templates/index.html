@@ -19,7 +19,7 @@
         {% endwith %}
         <h1>Portail de prédiction pour émotion</h1>
         <h2>Choisir les fichiers audio et texte pour l'inférence:</h2>
-        <form action = "http://localhost:8888/index" method = "POST" 
+        <form action = "/index" method = "POST" 
             enctype = "multipart/form-data">
             <input type = "file" name = "files[]" multiple required />
             <input type = "submit"/>
