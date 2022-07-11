@@ -28,7 +28,7 @@ jobs:
         set -o pipefail
         set -o nounset
 
-        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3.8 - --yes
+        curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.14 python3.8 - --yes
 
         poetry=$HOME/.local/bin/poetry
         
@@ -52,9 +52,6 @@ jobs:
         sudo apt-get install libsndfile1
 
         poetry=$HOME/.local/bin/poetry
-
-        echo "Checking that the poetry.lock file corresponds to the current version of pyproject.toml."
-        $poetry lock --check
 
         $poetry install --no-interaction --without dev
         ./.venv/bin/pip install pytest

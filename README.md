@@ -67,7 +67,7 @@ python3 --version
 
 To install Poetry, run:
 ```bash
-curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3 - --yes
+curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.14 python3 - --yes
 ```
 
 Clone the project
