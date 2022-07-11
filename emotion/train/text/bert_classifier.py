@@ -6,15 +6,14 @@ import tensorflow_hub as hub
 
 
 from pathlib import Path
-#from emotion import module_dir, root_dir
+from emotion import module_dir, root_dir
 from tensorflow.keras.models import model_from_json
 from transformers import BertTokenizerFast, TFBertModel
 from sklearn.model_selection import train_test_split as tts
 
 #from emotion import module_dir, root_dir
-root_dir = '../../../'
-module_dir = '../../'
-MAX_LEN = 60
+
+MAX_LEN = 40
 
 #SENTS_DIR = PATH(root_dir / "data/process/polarity_balanced.csv")
 module_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2'
@@ -32,7 +31,6 @@ METRICS = [
     tf.keras.metrics.Precision(name = 'precision'),
     tf.keras.metrics.Recall(name = 'recall')
 ]
-
 
 
 #Encodes lists of texts into BERT-useable tensors
@@ -79,7 +77,7 @@ def build_model(bert_layer=BERT_LAYER, max_len=MAX_LEN):
     
     return model
 
-
+#Simple training function with a few parameters
 def train_dnn(model, X_train, y_train, e=10):
     checkpoint = tf.keras.callbacks.ModelCheckpoint('checkpoint_model.h5', monitor='val_accuracy', save_best_only=True, verbose=1)
     earlystopping = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5, verbose=1)
@@ -99,22 +97,23 @@ def train_dnn(model, X_train, y_train, e=10):
 
 
 def main():
-    
-    
-    data = pd.read_csv(FEATURES)
-    x = data.clean_text.values
-    dummy_sents = pd.get_dummies(data.sentiment)
-    y = dummy_sents.values
-    X_train, X_test, y_train, y_test = tts(x, y, test_size = 0.1)
-    model = build_model()
+    if Path.is_file(FEATURES) and Path.is_file(LABELS):
+        data = pd.read_csv(FEATURES)
+        x = data.clean_text.values
+        dummy_sents = pd.get_dummies(data.sentiment)
+        y = dummy_sents.values
+        X_train, X_test, y_train, y_test = tts(x, y, test_size = 0.1)
+        model = build_model()
 
-    train_dnn(model, X_train, y_train)
+        train_dnn(model, X_train, y_train)
 
-    model_json = model.to_json()
-    with open(f"{ARTIFACTS_DIR}/text_model.json", "w") as json_file:
-        json_file.write(model_json)
-    with open(f"{ARTIFACTS_DIR}/weights.h5", "w") as f:
-        model.save_weights(f)
+        model_json = model.to_json()
+        with open(f"{ARTIFACTS_DIR}/text_model.json", "w") as json_file:
+            json_file.write(model_json)
+        with open(f"{ARTIFACTS_DIR}/weights.h5", "w") as f:
+            model.save_weights(f)
+    else:
+        print(f"MISSING FILES FROM {DATA_DIR}")
 
 
 

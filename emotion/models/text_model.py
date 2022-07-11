@@ -9,7 +9,6 @@ from emotion.features.text.extract_text import remove_non_ascii, clean_stopwords
 
 
 
-
 class TextModel():
     '''
     Deep neural network classifier using BERT embeddings
@@ -36,6 +35,7 @@ class TextModel():
 
         return sent_dict[proba]
 
+    # Makes the prediction on encoding
     def predict(self, encoding):
         preds = self._model.predict(encoding)
         sent = self.to_sentiment(np.argmax(preds))

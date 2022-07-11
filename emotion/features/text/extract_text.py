@@ -1,7 +1,5 @@
 
 
-import glob
-import pathlib
 import re
 import sys
 import string
@@ -17,13 +15,11 @@ from sklearn.model_selection import train_test_split as tts
 from emotion import module_dir, root_dir
 
 
-
-RAW_TEXT_DIR = Path(root_dir / "data/raw/text")
-LABELS_DIR =  Path(root_dir / "data/raw/labels")
 SENTS_DIR = Path(root_dir / "data/process/polarity_balanced")
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 stopwords_dict = Counter(stopwords.words('English'))
+MAX_LEN = 40
 
 #Removes time stamps from every line
 def remove_stamps_str(line)->str:
@@ -90,7 +86,8 @@ def extract_text_from_dir(files_list, text_dir):
     corpus = (text for (identifier,text) in text_list_generator(files_list, text_dir))
 
 
-def bert_encode(texts, tokenizer=TOKENIZER, max_len=40):
+#Uses the predefined bert Tokenizer to tokenize text segments
+def bert_encode(texts, tokenizer=TOKENIZER, max_len=MAX_LEN):
     all_tokens = []
     all_masks = []
     all_segments = []
@@ -126,3 +123,7 @@ def main():
     x = polarity_df.clean_text.values
     y = dummy_sents.values
     X_train, X_test, y_train, y_test = tts(x, y, test_size = 0.2)
+
+
+if __name__ == "__main__":
+    main()
