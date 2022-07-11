@@ -1,6 +1,6 @@
 from flask import flash, jsonify, redirect, render_template, request
 
-from app import app, audio_model
+from app import app
 from app.utils import prepare_data, print_items
 
 
