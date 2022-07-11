@@ -53,7 +53,7 @@ jobs:
 
         poetry=$HOME/.local/bin/poetry
 
-        $poetry install --no-interaction --without dev
+        $poetry install --no-interaction --no-dev
         ./.venv/bin/pip install pytest
 
     - name: Test with pytest
