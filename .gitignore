@@ -1,5 +1,5 @@
 /.env
-/artifacts
+/emotion/artifacts
 /notebooks/.ipynb_checkpoints/
 /data/raw
 /data/raw_sample
