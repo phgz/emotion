@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request
+from flask import flash, jsonify, redirect, render_template, request
 
 from app import app, audio_model
 from app.utils import prepare_data, print_items
@@ -9,6 +9,7 @@ def index():
    return render_template('index.html')
 
 
+@app.route("/predict", methods=["POST"])
 @app.route("/index", methods=["POST"])
 def predict():
     files = request.files.getlist('files[]')
@@ -24,6 +25,8 @@ def predict():
     predictions_audio = audio_files and audio_model.predict(audio_model.preprocess([file.stream for file in audio_files])) or []
     predictions_texte = text_files and [{line: str(i) for i, line in enumerate(texts)} for texts in text_files_texts] or []
 
-    flash(print_items({"predictions_audio":{file.filename: pred for file, pred in zip(audio_files, predictions_audio)}, "predictions_texte":{file.filename: pred for file, pred in zip(text_files, predictions_texte)}}))
+    preds = {"predictions_audio":{file.filename: pred for file, pred in zip(audio_files, predictions_audio)}, "predictions_texte":{file.filename: pred for file, pred in zip(text_files, predictions_texte)}}
 
-    return redirect("/index")
+    flash(print_items(preds))
+
+    return redirect("/index") if request.path == "/index" else jsonify(preds)
