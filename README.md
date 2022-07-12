@@ -53,7 +53,7 @@ curl -F 'files[]=@/home/user/emotion/data/raw_sample/audio/DatH-ra0VKY.wav' -F '
 Install emotion with pip
 
 ```bash
-  pip install emotion
+  pip install a62-emotion
 ```
 
 ## Environment Variables
