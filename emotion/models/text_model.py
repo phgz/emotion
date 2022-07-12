@@ -7,6 +7,9 @@ from pathlib import Path
 from tensorflow.keras.models import model_from_json
 from emotion.features.text.extract_text import remove_non_ascii, clean_stopwords_digits, bert_encode 
 
+ARTIFACTS_DIR = Path(module_dir / "artifacts")
+MODEL = f"{ARTIFACTS_DIR}/text_model.json"
+WEIGHTS = f"{ARTIFACTS_DIR}/weights.h5"
 
 
 class TextModel():
@@ -14,12 +17,12 @@ class TextModel():
     Deep neural network classifier using BERT embeddings
     '''
     def __init__(self):
-        json_file= open("text_model.json", 'r')
+        json_file= open(MODEL, 'r')
         loaded_model_json = json_file.read()
         json_file.close()
 
         self._model = model_from_json(loaded_model_json, custom_objects={'KerasLayer':hub.KerasLayer})
-        self._model.load_weights("weights.h5")
+        self._model.load_weights(WEIGHTS)
 
     def preprocess(self, text_str):
         cleaned_str = clean_stopwords_digits(remove_non_ascii(text_str))
