@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow_hub as hub
 from pathlib import Path
 from tensorflow.keras.models import model_from_json
-from emotion.features.text.extract_text import remove_non_ascii, clean_stopwords_digits, bert_encode 
+from emotion.features.text.extract_text import remove_nonascii, clean_stopwords_digits, bert_encode 
 from emotion import module_dir, root_dir
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
@@ -25,7 +25,7 @@ class TextModel():
         self._model.load_weights(WEIGHTS)
 
     def preprocess(self, text_str):
-        cleaned_str = clean_stopwords_digits(remove_non_ascii(text_str))
+        cleaned_str = clean_stopwords_digits(remove_nonascii(text_str))
         encoding = bert_encode(cleaned_str)
         return encoding
 
