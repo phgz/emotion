@@ -583,7 +583,7 @@ python-versions = "*"
 name = "filelock"
 version = "3.7.1"
 description = "A platform independent file lock."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -940,7 +940,7 @@ pyparsing = {version = ">=2.4.2,<3.0.0 || >3.0.0,<3.0.1 || >3.0.1,<3.0.2 || >3.0
 name = "huggingface-hub"
 version = "0.8.1"
 description = "Client library to download and publish models, datasets and other repos on the huggingface.co hub"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7.0"
 
@@ -2625,7 +2625,7 @@ test = ["pytest", "pytest-cov", "pytest-flake8", "pytest-isort", "coverage"]
 name = "tokenizers"
 version = "0.12.1"
 description = "Fast and Customizable Tokenizers"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -2721,7 +2721,7 @@ test = ["pre-commit", "pytest"]
 name = "transformers"
 version = "4.20.1"
 description = "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7.0"
 
@@ -2954,7 +2954,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "3.8.13"
-content-hash = "3c2662a7903d6ec2453ccf968eb6b8ead4348227756a52ec814d486c093639e4"
+content-hash = "d4a3418fcd5764e34e0568838535b3fcc9b512581b9246c3928d8fa5b3b4e065"
 
 [metadata.files]
 absl-py = [
