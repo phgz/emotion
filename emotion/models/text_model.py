@@ -1,7 +1,6 @@
 
 import pickle
 import numpy as np
-import extract_text
 import tensorflow_hub as hub
 from pathlib import Path
 from tensorflow.keras.models import model_from_json
@@ -44,8 +43,3 @@ class TextModel():
         preds = self._model.predict(encoding)
         sent = self.to_sentiment(np.argmax(preds))
         return sent
-        
-
-
-
-    
