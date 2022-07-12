@@ -78,7 +78,7 @@ def build_model(bert_layer=BERT_LAYER, max_len=MAX_LEN):
     return model
 
 #Simple training function with a few parameters
-def train_dnn(model, X_train, y_train, e=10):
+def train_dnn(model, X_train, y_train, e=4):
     checkpoint = tf.keras.callbacks.ModelCheckpoint('checkpoint_model.h5', monitor='val_accuracy', save_best_only=True, verbose=1)
     earlystopping = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5, verbose=1)
 
