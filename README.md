@@ -18,7 +18,7 @@ Give audio and text as input and get back the dominant emotion.
 
 Be sure to add double quotes to lines containing one or more commas for `.csv` files.
 
-For graphical interface, use `https://a62-emotion.herokuapp.com/predict/index` and upload `.wav` and `.csv` files.
+For graphical interface, use https://a62-emotion.herokuapp.com/predict/index and upload `.wav` and `.csv` files.
 
 ```python
 In [1]: import requests
