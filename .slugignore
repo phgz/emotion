@@ -1,0 +1,8 @@
+# This is used to remove files before heroku deployment
+# Default project files not needed for deployment
+/data
+/notebooks
+/hyperparameters
+/metrics
+/reports
+/tests

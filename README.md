@@ -3,8 +3,6 @@
 A model for emotion classification based on text and audio.
 
 [![emotion - merge](https://github.com/philipGaudreau/emotion/actions/workflows/merge.yml/badge.svg)](https://github.com/philipGaudreau/emotion/actions/workflows/merge.yml)
-[![emotion - pr](https://github.com/philipGaudreau/emotion/actions/workflows/pr.yml/badge.svg?event=pull_request)](https://github.com/philipGaudreau/emotion/actions/workflows/pr.yml)
-[![emotion - push](https://github.com/philipGaudreau/emotion/actions/workflows/push.yml/badge.svg?event=push)](https://github.com/philipGaudreau/emotion/actions/workflows/push.yml)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 ## Acknowledgements
@@ -69,7 +67,7 @@ python3 --version
 
 To install Poetry, run:
 ```bash
-curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.2.0b1 python3 - --yes
+curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.14 python3 - --yes
 ```
 
 Clone the project
