@@ -14,12 +14,12 @@ class TextModel():
     Deep neural network classifier using BERT embeddings
     '''
     def __init__(self):
-        json_file= open("model.json", 'r')
+        json_file= open("text_model.json", 'r')
         loaded_model_json = json_file.read()
         json_file.close()
 
         self._model = model_from_json(loaded_model_json, custom_objects={'KerasLayer':hub.KerasLayer})
-        self._model.load_weights("model.h5")
+        self._model.load_weights("weights.h5")
 
     def preprocess(self, text_str):
         cleaned_str = clean_stopwords_digits(remove_non_ascii(text_str))
