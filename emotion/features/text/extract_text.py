@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from pathlib import Path
-from nltk.corpus import stopwords
+#from nltk.corpus import stopwords
 from collections import Counter
 from transformers import BertTokenizerFast, TFBertModel
 
@@ -15,11 +15,16 @@ from sklearn.model_selection import train_test_split as tts
 from emotion import module_dir, root_dir
 
 
+stopwords_file = Path(root_dir / "notebooks/stop_words.txt")
 SENTS_DIR = Path(root_dir / "data/process/polarity_balanced")
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
-stopwords_dict = Counter(stopwords.words('English'))
+#stopwords_dict = Counter(stopwords.words('English'))
 MAX_LEN = 40
+
+file = open(stopwords_file, 'r')
+stopwords = [line.strip() for line in file.readlines()]
+file.close()
 
 #Removes time stamps from every line
 def remove_stamps_str(line)->str:
