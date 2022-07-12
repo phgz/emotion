@@ -11,7 +11,7 @@ from tensorflow.keras.models import model_from_json
 from transformers import BertTokenizerFast, TFBertModel
 from sklearn.model_selection import train_test_split as tts
 
-#from emotion import module_dir, root_dir
+from emotion import module_dir, root_dir
 
 MAX_LEN = 40
 
@@ -19,10 +19,10 @@ MAX_LEN = 40
 module_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2'
 BERT_LAYER = hub.KerasLayer(module_url, trainable=True)
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
-DATA_DIR = (root_dir + 'data/processed/text')
-FEATURES = (DATA_DIR + 'polarity_balanced.csv')
+DATA_DIR = Path(root_dir / 'data/processed/text')
+FEATURES = (DATA_DIR / 'polarity_balanced.csv')
 
-ARTIFACTS_DIR = Path(module_dir + 'artifacts')
+ARTIFACTS_DIR = Path(module_dir / 'artifacts')
 
 
 #Interesting/meaningful metrics

@@ -6,6 +6,7 @@ import tensorflow_hub as hub
 from pathlib import Path
 from tensorflow.keras.models import model_from_json
 from emotion.features.text.extract_text import remove_non_ascii, clean_stopwords_digits, bert_encode 
+from emotion import module_dir, root_dir
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 MODEL = f"{ARTIFACTS_DIR}/text_model.json"
