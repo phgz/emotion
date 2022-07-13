@@ -9,7 +9,7 @@ from emotion.features.text.extract_text import remove_nonascii, clean_punct_digi
 from emotion import module_dir, root_dir
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
-MODEL = f"{ARTIFACTS_DIR}/text_model.json"
+MODEL = f"{ARTIFACTS_DIR}/text_model.h5"
 
 
 class TextModel():
