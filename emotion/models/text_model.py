@@ -9,22 +9,22 @@ from emotion.features.text.extract_text import remove_nonascii, clean_punct_digi
 from emotion import module_dir, root_dir
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
-MODEL = f"{ARTIFACTS_DIR}/text_model.h5"
 
-
+MODEL = f"{ARTIFACTS_DIR}/text_model.json"
+WEIGHTS =f"{ARTIFACTS_DIR}/weights.h5"
 class TextModel():
     '''
     Deep neural network classifier using BERT embeddings
     '''
     def __init__(self):
-        """
+        
         json_file= open(MODEL, 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         self._model = model_from_json(loaded_model_json, custom_objects={'KerasLayer':hub.KerasLayer})
         self._model.load_weights(WEIGHTS)
-        """
-        self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
+        
+        #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
     def preprocess(self, text_str):
         cleaned_str = clean_punct_digits(remove_nonascii(text_str))
