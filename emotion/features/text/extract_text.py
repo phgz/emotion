@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 
 from pathlib import Path
-#from nltk.corpus import stopwords
 from collections import Counter
 from transformers import BertTokenizerFast, TFBertModel
 
@@ -15,16 +14,14 @@ from sklearn.model_selection import train_test_split as tts
 from emotion import module_dir, root_dir
 
 
-stopwords_file = Path(root_dir / "notebooks/stop_words.txt")
-SENTS_DIR = Path(root_dir / "data/process/polarity_balanced")
+
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
-#stopwords_dict = Counter(stopwords.words('English'))
+DATA_DIR = Path(root_dir / 'data/processed/text')
+DATA = f"{DATA_DIR}/polarity_df"
+
 MAX_LEN = 40
 
-file = open(stopwords_file, 'r')
-stopwords = [line.strip() for line in file.readlines()]
-file.close()
 
 #Removes time stamps from every line
 def remove_stamps_str(line)->str:
@@ -68,23 +65,11 @@ def remove_nonascii(line)->str:
     ascii_line = line.encode(encoding = 'ascii', errors = 'ignore').decode()
     return ascii_line
 
-#met tout en minuscules, retire les nombres et stopwords
-def clean_stopwords_digits(line)->str:
+#met tout en minuscules, retire les nombres
+def clean_punct_digits(line)->str:
     new_line = line.translate(str.maketrans('', '', string.punctuation))
-    new_line = ' '.join([word.lower() for word in new_line.split() if (len(word) >=2 and word.isalpha() and word not in stopwords_dict)])
+    new_line = ' '.join([word.lower() for word in new_line.split() if (len(word) >=2 and word.isalpha())])
     return new_line
-
-
-#Création du feature selon emotion négative, neutre ou positive
-def to_sentiment(row):
-    # Neutral
-    if row.sum() == 0:
-        return 1
-    # Positive
-    elif row['happiness'] or row['surprise']:
-        return 2
-    else :
-        return 0
 
 
 def extract_text_from_dir(files_list, text_dir):
@@ -116,14 +101,8 @@ def bert_encode(texts, tokenizer=TOKENIZER, max_len=MAX_LEN):
 
 
 def main():
-    #text_files = glob.glob(f"{TEXT_DIR}/*.txt")
-    stop_words = stopwords.words('English')
 
-    #création d'un dict pour lookup en O(1)
-    stopwords_dict = Counter(stop_words)
-
-
-    polarity_df = pd.read_csv('polarity_balanced.csv')
+    polarity_df = pd.read_csv(DATA)
     dummy_sents = pd.get_dummies(polarity_df['sentiment'])
     x = polarity_df.clean_text.values
     y = dummy_sents.values

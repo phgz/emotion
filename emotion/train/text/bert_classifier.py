@@ -13,14 +13,14 @@ from sklearn.model_selection import train_test_split as tts
 
 from emotion import module_dir, root_dir
 
-MAX_LEN = 40
+MAX_LEN = 128
 
 #SENTS_DIR = PATH(root_dir / "data/process/polarity_balanced.csv")
 module_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2'
 BERT_LAYER = hub.KerasLayer(module_url, trainable=True)
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
 DATA_DIR = Path(root_dir / 'data/processed/text')
-FEATURES = (DATA_DIR / 'polarity_balanced.csv')
+FEATURES = Path(DATA_DIR / 'polarity_balanced.csv')
 
 ARTIFACTS_DIR = Path(module_dir / 'artifacts')
 
@@ -97,7 +97,7 @@ def train_dnn(model, X_train, y_train, e=4):
 
 
 def main():
-    if Path.is_file(FEATURES) and Path.is_file(LABELS):
+    if Path.is_file(FEATURES):
         data = pd.read_csv(FEATURES)
         x = data.clean_text.values
         dummy_sents = pd.get_dummies(data.sentiment)
@@ -110,8 +110,9 @@ def main():
         model_json = model.to_json()
         with open(f"{ARTIFACTS_DIR}/text_model.json", "w") as json_file:
             json_file.write(model_json)
-        with open(f"{ARTIFACTS_DIR}/weights.h5", "w") as f:
-            model.save_weights(f)
+        
+        model.save_weights(f"{ARTIFACTS_DIR}/weights.h5")
+
     else:
         print(f"MISSING FILES FROM {DATA_DIR}")
 
