@@ -25,7 +25,7 @@ class TextModel():
     Deep neural network classifier using BERT embeddings
     '''
     def __init__(self, model=None, weights=None):
-            self._model = model_from_json(model or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
+            self._model = model_from_json(model and open(model, 'r').read() or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
             self._model.load_weights(weights or WEIGHTS)
             
             #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
