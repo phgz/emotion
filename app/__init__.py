@@ -1,7 +1,9 @@
 import os
+import subprocess
 
-import dvc.api
+from emotion import module_dir
 from emotion.models.audio_model import AudioModel
+from emotion.models.text_model import TextModel
 from flask import Flask
 
 # initialize the Flask application
@@ -9,11 +11,9 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ["FLASK_SECRET_KEY"]
 
-with dvc.api.open(
-        'emotion/artifacts/audio_model.pkl',
-        repo='https://github.com/philipgaudreau/emotion',
-        mode="rb"
-        ) as fd:
-    audio_model = AudioModel(fd)
+subprocess.run(["dvc", "get", "-o", module_dir, "https://github.com/philipgaudreau/emotion", "emotion/artifacts"])
+
+audio_model = AudioModel()
+text_model = TextModel()
 
 from app import routes
