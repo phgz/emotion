@@ -5,7 +5,7 @@ import tensorflow_hub as hub
 
 from pathlib import Path
 from tensorflow.keras.models import model_from_json
-from emotion.features.text.extract_text import remove_nonascii, clean_punct_digits, bert_encode 
+from emotion.features.text.extract_text import remove_nonascii, clean_punct_digits, bert_encode, remove_stamps_str
 from emotion import module_dir, root_dir
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
@@ -26,8 +26,14 @@ class TextModel():
         
         #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
-    def preprocess(self, text_str):
-        cleaned_str = clean_punct_digits(remove_nonascii(text_str))
+    def preprocess(self, files):
+        text_str = ''
+        for f in files:
+            with open(f, 'r') as input_file:
+                text_str += f.read()
+
+        new_str = remove_stamps_str(text_str)
+        cleaned_str = clean_punct_digits(remove_nonascii(new_str))
         encoding = bert_encode(cleaned_str)
         return encoding
 
