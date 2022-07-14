@@ -27,12 +27,10 @@ class TextModel():
         #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
     def preprocess(self, files):
-        text_str = ''
+        new_str = ''
         for f in files:
             with open(f, 'r') as input_file:
-                text_str += f.read()
-
-        new_str = remove_stamps_str(text_str)
+                new_str += input_file.read()
         cleaned_str = clean_punct_digits(remove_nonascii(new_str))
         encoding = bert_encode(cleaned_str)
         return encoding
