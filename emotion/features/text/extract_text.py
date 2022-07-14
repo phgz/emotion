@@ -20,7 +20,7 @@ ARTIFACTS_DIR = Path(module_dir / "artifacts")
 DATA_DIR = Path(root_dir / 'data/processed/text')
 DATA = f"{DATA_DIR}/polarity_df"
 
-MAX_LEN = 40
+MAX_LEN = 20
 
 
 #Removes time stamps from every line
