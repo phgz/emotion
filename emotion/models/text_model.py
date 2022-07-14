@@ -8,6 +8,9 @@ from tensorflow.keras.models import model_from_json
 from emotion.features.text.extract_text import remove_nonascii, clean_punct_digits, bert_encode, remove_stamps_str
 from emotion import module_dir, root_dir
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 
 MODEL = f"{ARTIFACTS_DIR}/text_model.json"
@@ -26,25 +29,24 @@ class TextModel():
         
         #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
-    def preprocess(self, files):
-        new_str = ''
-        for f in files:
-            with open(f, 'r') as input_file:
-                new_str += input_file.read()
-        cleaned_str = clean_punct_digits(remove_nonascii(new_str))
-        encoding = bert_encode(cleaned_str)
+    def preprocess(self, texts):
+
+       
+
+        cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
+        encoding = bert_encode(cleaned_list)
         return encoding
 
     # Converts the classes to their assigned sentiment
-    def to_sentiment(self, proba):
+    def to_sentiment(self, proba_list):
         sent_dict = {0 : 'negative', 
                      1 : 'neutral',
                      2 : 'positive'}
 
-        return sent_dict[proba]
+        return [sent_dict[proba] for proba in proba_list]
 
     # Makes the prediction on encoding
     def predict(self, encoding):
         preds = self._model.predict(encoding)
-        sent = self.to_sentiment(np.argmax(preds))
-        return sent
+        sents = self.to_sentiment([np.argmax(pred) for pred in preds])
+        return sents
