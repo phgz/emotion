@@ -1,33 +1,34 @@
+import os
+from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
-
-from pathlib import Path
-from tensorflow.keras.models import model_from_json
-from emotion.features.text.extract_text import remove_nonascii, clean_punct_digits, bert_encode, remove_stamps_str
 from emotion import module_dir, root_dir
+from emotion.features.text.extract_text import (
+    bert_encode,
+    clean_punct_digits,
+    remove_nonascii,
+    remove_stamps_str
+)
+from tensorflow.keras.models import model_from_json
 
-import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 
 MODEL = f"{ARTIFACTS_DIR}/text_model.json"
 WEIGHTS =f"{ARTIFACTS_DIR}/weights.h5"
+
 class TextModel():
     '''
     Deep neural network classifier using BERT embeddings
     '''
-    def __init__(self):
-        
-        json_file= open(MODEL, 'r')
-        loaded_model_json = json_file.read()
-        json_file.close()
-        self._model = model_from_json(loaded_model_json, custom_objects={'KerasLayer':hub.KerasLayer})
-        self._model.load_weights(WEIGHTS)
-        
-        #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
+    def __init__(self, model=None, weights=None):
+            self._model = model_from_json(model or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
+            self._model.load_weights(weights or WEIGHTS)
+            
+            #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
     def preprocess(self, texts):
 
