@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "a62-emotion"
-version = "0.11.10"
+version = "0.11.0"
 description = "A model for emotion classification based on text and audio."
 authors = ["Philip Gaudreau <this@philipgaudreau.email>", "Guy Raymond <guy.tard@gmail.com>", "Gabriel Trottier <gtrottier16@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/philipgaudreau/emotion"
 
 packages = [
-    { include = "emotion"},
+    { include = "emotion"}
 ]
 
 [tool.poetry.dependencies]
@@ -18,11 +18,14 @@ scikit-learn = "0.24.2"
 pandas = "1.2.4"
 librosa = "^0.9.1"
 dvc = {version = "<2.11", extras = ["gdrive"]}
+tensorflow-hub = "^0.12.0"
 Flask = "^2.1.2"
 gunicorn = "^20.1.0"
+nltk = "^3.7"
+transformers = "^4.20.1"
+tensorflow-cpu = "^2.9.1"
 
 [tool.poetry.dev-dependencies]
-nltk = "^3.7"
 seaborn = "^0.11.2"
 pytest = "^7.1.1"
 jupyter = "^1.0.0"
@@ -32,8 +35,8 @@ matplotlib = "3.4.2"
 fanalysis = "^0.0.1"
 TPOT = "^0.11.7"
 torch = "^1.11.0"
-wordcloud = "^1.8.1"
 tensorflow = "^2.9.1"
+wordcloud = "^1.8.1"
 keras = "^2.9.0"
 speechpy = "^2.4"
 

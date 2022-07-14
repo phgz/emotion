@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from emotion import root_dir
 from emotion.models.audio_model import AudioModel
 
