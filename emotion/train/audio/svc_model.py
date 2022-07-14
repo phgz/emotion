@@ -13,7 +13,7 @@ from sklearn.svm import SVC
 from emotion import module_dir, root_dir
 
 DATA_DIR = Path(root_dir / "data/processed/audio")
-FEATURES = Path(DATA_DIR / "mfcc40_3sec_mean_features.csv")
+FEATURES = Path(DATA_DIR / "audio_features.csv")
 LABELS = Path(DATA_DIR / "sentiment_labels.csv")
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 
@@ -34,7 +34,7 @@ def create_datasets(in_features, in_labels, test_size=0.2):
     features = in_features.copy().reindex(labels.index)
     X_train, X_test, y_train, y_test = \
         train_test_split(features, labels, test_size=test_size,
-                         random_state=100,
+                         random_state=101,
                          stratify = labels.values.argmax(axis=1))
     scaler = StandardScaler().fit(X_train)
     X_train = scaler.transform(X_train)
@@ -111,7 +111,7 @@ def predict_show_metrics(model, X, y, show_confu=False, data_name='data'):
 
     conf_mtx, metrics = \
     calc_metrics_per_class(y.values.argmax(axis=1), pred,
-                           classes=y.columns.tolist())
+                           class_names=y.columns.tolist())
     if show_confu:
         print("")
         print(conf_mtx)

@@ -151,6 +151,8 @@ def get_sentiment_labels(labels_dir, audio_dir):
         if idx not in audio_clip_names:
             clips_no_audio.append(idx)
     sentiment_labels.drop(index=clips_no_audio, inplace=True)
+    drop_idx = sentiment_labels[sentiment_labels.sum(axis=1) > 1].index
+    sentiment_labels.drop(index=drop_idx, inplace=True)
     print(f"{sentiment_labels.shape[0]} labels for sentiment with audio")
     return sentiment_labels
 

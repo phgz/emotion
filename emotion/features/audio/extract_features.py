@@ -10,6 +10,7 @@ from pathlib import Path
 import librosa
 import numpy as np
 import pandas as pd
+
 from emotion import root_dir
 
 # audio directories
@@ -61,8 +62,8 @@ def extract_features_mean(audio_file, len_secs=3,
     
     feature_names += ['mfcc_' + str(x) for x in range(1, n_mfccs + 1)]
     S = librosa.feature.melspectrogram(y=samples,
-                                   sr=srate, n_mels=64, #128,
-                                   fmax=8000, hop_length=512)
+                                   sr=srate, n_mels=128, n_fft=1200,
+                                   fmax=8000, win_length=1200, hop_length=800)
     mfccs = librosa.feature.mfcc(S=librosa.power_to_db(S), n_mfcc=n_mfccs)
     mfccs = np.mean(mfccs, axis=1)
     if isinstance(audio_features, np.ndarray):
@@ -121,7 +122,8 @@ def extract_features_median(audio_file, len_secs=3,
     return audio_features, feature_names
 
 
-def extract_features_from_files(files, agg='mean', len_secs=3, n_mfccs=40, rms=False, zrc=False, show_progress=True):
+def extract_features_from_files(files, agg='mean', len_secs=3, n_mfccs=40,
+        rms=False, zrc=False, show_progress=True):
     '''
         extract audio features from files
         files  : directory containing wav files 16000 sampling rate, mono
@@ -214,7 +216,7 @@ def extract_features_from_dir(audio_dir, file_names=None,
 def main():
     feature_file = \
         Path(AUDIO_FEATURES_DIR / \
-            f"mfcc{N_MFCCS}_{LEN_SECS}sec_{AGG}_features.csv")
+            "audio_features.csv")
     if pathlib.Path.is_file(feature_file):
         print(f"{feature_file} already exists, no export to csv")
     else:
