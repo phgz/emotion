@@ -2,17 +2,18 @@ import os
 from pathlib import Path
 
 import numpy as np
-import tensorflow as tf
-import tensorflow_text
-import tensorflow_hub as hub
+#import tensorflow as tf
+#import tensorflow_text
+#import tensorflow_hub as hub
+#from tensorflow.keras.models import model_from_json
 from emotion import module_dir, root_dir
+"""
 from emotion.features.text.extract_text import (
-    bert_encode,
     clean_punct_digits,
     remove_nonascii,
     remove_stamps_str
 )
-from tensorflow.keras.models import model_from_json
+"""
 
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
@@ -25,14 +26,15 @@ class TextModel():
     Deep neural network classifier using BERT embeddings
     '''
     def __init__(self, model=None, weights=None):
-            self._model = model_from_json(model and open(model, 'r').read() or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
-            self._model.load_weights(weights or WEIGHTS)
+        self.model = 'dummy_model'
+           # self._model = model_from_json(model and open(model, 'r').read() or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
+           # self._model.load_weights(weights or WEIGHTS)
             
 
     def preprocess(self, texts):
-        cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
+        #cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
         #encoding = bert_encode(cleaned_list)
-        encoding = [np.random.randint(3) for i in range(len(cleaned_list))]
+        encoding = [np.random.randint(3) for i in range(len(texts))]
         return encoding
 
     # Converts the classes to their assigned sentiment
