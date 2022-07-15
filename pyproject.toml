@@ -24,7 +24,7 @@ gunicorn = "^20.1.0"
 nltk = "^3.7"
 transformers = "^4.20.1"
 tensorflow-cpu = "^2.9.1"
-tensorflow-text = "^2.9.0"
+
 
 [tool.poetry.dev-dependencies]
 seaborn = "^0.11.2"
@@ -37,6 +37,7 @@ fanalysis = "^0.0.1"
 TPOT = "^0.11.7"
 torch = "^1.11.0"
 tensorflow = "^2.9.1"
+tensorflow-text = "^2.9.0"
 wordcloud = "^1.8.1"
 keras = "^2.9.0"
 speechpy = "^2.4"

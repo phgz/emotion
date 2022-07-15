@@ -3,7 +3,6 @@ from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
-import tensorflow_text
 import tensorflow_hub as hub
 from emotion import module_dir, root_dir
 from emotion.features.text.extract_text import (
@@ -32,7 +31,7 @@ class TextModel():
     def preprocess(self, texts):
         cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
         #encoding = bert_encode(cleaned_list)
-        encoding = tf.constant(cleaned_list)
+        encoding = [np.random.randint(3) for i in range(len(cleaned_list))]
         return encoding
 
     # Converts the classes to their assigned sentiment
@@ -45,7 +44,6 @@ class TextModel():
 
     # Makes the prediction on encoding
     def predict(self, encoding):
-        preds = self._model.predict(encoding)
-        sents = self.to_sentiment([np.random.randint(3) for i in range(len(encoding))])
+        sents = self.to_sentiment(encoding)
         #sents = self.to_sentiment([np.argmax(pred) for pred in preds])
         return sents
