@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+import tensorflow_text
 import tensorflow_hub as hub
 
 
@@ -13,14 +14,14 @@ from sklearn.model_selection import train_test_split as tts
 
 from emotion import module_dir, root_dir
 
-MAX_LEN = 128
+MAX_LEN = 20
 
-#SENTS_DIR = PATH(root_dir / "data/process/polarity_balanced.csv")
+
 module_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2'
 BERT_LAYER = hub.KerasLayer(module_url, trainable=True)
 TOKENIZER = BertTokenizerFast.from_pretrained('bert-base-uncased')
 DATA_DIR = Path(root_dir / 'data/processed/text')
-FEATURES = Path(DATA_DIR / 'polarity_balanced.csv')
+FEATURES = Path(DATA_DIR / 'polarity.csv')
 
 ARTIFACTS_DIR = Path(module_dir / 'artifacts')
 
@@ -65,10 +66,10 @@ def build_model(bert_layer=BERT_LAYER, max_len=MAX_LEN):
 
     pooled_output, sequence_output = bert_layer([input_word_ids, input_mask, segment_ids])
     clf_output = sequence_output[:, 0, :]
-    #net = tf.keras.layers.Dense(128, activation= 'relu')(clf_output)
-    net = tf.keras.layers.Dense(64, activation='relu')(clf_output)
-    net = tf.keras.layers.Dropout(0.2)(net)
-    net = tf.keras.layers.Dense(32, activation='relu')(net)
+
+    #net = tf.keras.layers.Dense(64, activation='relu')(clf_output)
+    #net = tf.keras.layers.Dropout(0.2)(net)
+    net = tf.keras.layers.Dense(32, activation='relu')(clf_output)
     net = tf.keras.layers.Dropout(0.2)(net)
     out = tf.keras.layers.Dense(3, activation='softmax')(net)
     
@@ -90,7 +91,7 @@ def train_dnn(model, X_train, y_train, e=4):
             validation_split=0.2,
             epochs=e,
             callbacks=[checkpoint, earlystopping],
-            batch_size=32,
+            batch_size=4,
             verbose=1
             )
     return train_history

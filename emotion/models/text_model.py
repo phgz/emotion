@@ -3,6 +3,7 @@ from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
+import tensorflow_text
 import tensorflow_hub as hub
 from emotion import module_dir, root_dir
 from emotion.features.text.extract_text import (
@@ -13,7 +14,6 @@ from emotion.features.text.extract_text import (
 )
 from tensorflow.keras.models import model_from_json
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 ARTIFACTS_DIR = Path(module_dir / "artifacts")
 
@@ -31,9 +31,6 @@ class TextModel():
             #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
     def preprocess(self, texts):
-
-       
-
         cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
         encoding = bert_encode(cleaned_list)
         return encoding
