@@ -3,6 +3,7 @@ from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
+import tensorflow_text
 import tensorflow_hub as hub
 from emotion import module_dir, root_dir
 from emotion.features.text.extract_text import (
