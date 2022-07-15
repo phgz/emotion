@@ -28,11 +28,11 @@ class TextModel():
             self._model = model_from_json(model and open(model, 'r').read() or open(MODEL, 'r').read(), custom_objects={'KerasLayer':hub.KerasLayer})
             self._model.load_weights(weights or WEIGHTS)
             
-            #self._model =  tf.keras.models.load_model(MODEL, custom_objects={'KerasLayer':hub.KerasLayer})
 
     def preprocess(self, texts):
         cleaned_list = [clean_punct_digits(remove_nonascii(text)) for text in texts]
-        encoding = bert_encode(cleaned_list)
+        #encoding = bert_encode(cleaned_list)
+        encoding = tf.constant(cleaned_list)
         return encoding
 
     # Converts the classes to their assigned sentiment
@@ -46,5 +46,6 @@ class TextModel():
     # Makes the prediction on encoding
     def predict(self, encoding):
         preds = self._model.predict(encoding)
-        sents = self.to_sentiment([np.argmax(pred) for pred in preds])
+        sents = self.to_sentiment([np.random.randint(3) for i in range(len(encoding))])
+        #sents = self.to_sentiment([np.argmax(pred) for pred in preds])
         return sents
